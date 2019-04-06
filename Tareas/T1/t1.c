@@ -15,11 +15,9 @@ char *eliminados(char *str, char *pat){
     int len_str = strlen(str);
     int len_pat = strlen(pat);
     int count_pat = 0;
-    int cmp = 0;
     while(*str){
         if(*str == *pat){
-            cmp = strncmp(str,pat,len_pat);
-            if(cmp==0){
+            if(strncmp(str,pat,len_pat)==0){
                 count_pat++;
                 str += len_pat-1;
             }
@@ -33,12 +31,10 @@ char *eliminados(char *str, char *pat){
 
     while(*str){
         if(*str == *pat){
-            cmp = strncmp(str,pat,len_pat);
-            if(cmp==0)
+            if(strncmp(str,pat,len_pat)==0)
                 str += len_pat;
         }
-        //*res = *str;
-        strncpy(res,str,1);
+        strncpy(res,str,1); //*res = *str;
         res++;
         str++;
     }
@@ -47,9 +43,43 @@ char *eliminados(char *str, char *pat){
 }
 
 void eliminar(char *str, char *pat){
-
+    char *ptr;
+    //int len_str = strlen(str);
+    int len_pat = strlen(pat);
+    ptr = str;
+    while(*str){
+        if (*pat == *str){
+            if(strncmp(str,pat,len_pat)==0){
+                str += len_pat;
+            }
+            else{
+                *ptr = *str;
+                str++;
+                ptr++;
+            }
+        }      
+        else{
+            *ptr = *str;
+            str++;
+            ptr++;
+        }
+    }
+    *str = *ptr;
+    *ptr='\0';
 }
 
 int k_primeros(Nodo **pa, int k){
+    Nodo *a = *pa;
+    if(k==0){
+        //*pa = ;
+        k=0;
+    }
+    else if (a == NULL){
+        k = 0;
+    }
+    else{
+        //int kizq = k_primeros(&a->izq,k);
+    }
+    
     return 0;
 }
