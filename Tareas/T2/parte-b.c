@@ -20,23 +20,55 @@ void read_line(FILE *file, char *line, int i, int len) {
 int cmp_file(void *ptr, int k, void *x){
 	FILE *f = ptr;
 	char *busqueda = x;
-	int len = strlen(busqueda);
-	char pa[len];
-	read_line(f, pa, k, len);
-	int val = strncmp(pa, busqueda, len);
+	char pa[ANCHO];
+	read_line(f, pa, k, ANCHO);
+	char *def=malloc(ANCHO*sizeof(char));
+	strcpy(def,pa);
+	int len_def=0;
+
+	while(*def!=':'){
+		def++;
+		len_def++;
+	}
+
+	*def=0;
+	def -= len_def;
+	int val = strcmp(def, busqueda);
 	return val;
 }
 
 
 char *consultar(char *nom_dic, char *pal, int n_lin) {
 	FILE *f = fopen(nom_dic, "r+");
-	char *palabra;
+	char *def = malloc((ANCHO +1) * sizeof(char));
 	int line = buscar(f, n_lin, pal, cmp_file);
-	fprintf(stderr, "LINEA = %d \n", line);
-	fseek(f,)
-	palabra = "holaaa";
+
+	if (line==-1) {
+		free(def); 
+		return NULL; 
+	}
+
+	char buf[ANCHO+1];
+	fseek(f, ANCHO*line, SEEK_SET);
+	fread(buf,1,ANCHO,f);
+	int largo = 0;
+	int len_def = 0;
+	for(;;){
+		if(buf[largo]==':'){ //Recorro palabra
+			break;
+		}
+		largo++;
+	}
+	largo++;
+	for(;;){ //Recorro def
+		if(buf[largo]==':'){
+			break;
+		}
+		def[len_def] = buf[largo];
+		largo++;
+		len_def++;
+	}
+	def[len_def] = '\0';
 	fclose(f);
-	return palabra;
+	return def;
 }
-
-
