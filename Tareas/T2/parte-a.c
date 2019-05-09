@@ -4,7 +4,7 @@
 int buscar(void *a, int n, void *x, Comparador cmp) {
 	int inicio = 0;
 	int final = n - 1;
-	int centro = 0;
+	int centro;
 	while (inicio <= final) {
 		centro = ((final - inicio)/2) + inicio;
 		int valor = cmp(a, centro, x);
